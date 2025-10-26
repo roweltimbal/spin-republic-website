@@ -1,10 +1,11 @@
-import NavigationBar from "./components/Navbar.jsx";
+import { BrowserRouter } from 'react-router-dom';
+import Home from './components/Home'
 
 function App() {
   return (
-    <div>
-      <NavigationBar />
-    </div>
+    <BrowserRouter>
+      <Home/>
+    </BrowserRouter>
   );
 }
 

@@ -1,115 +1,84 @@
-import * as React from 'react';
+import React from "react";
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import Logo from "../assets/srlogowhite.png"
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Box from '@mui/material/Box'
+import Drawer from '@mui/material/Drawer';
+import logo from '../assets/srlogowhite.png'
+import { height, useMediaQuery, useTheme } from "@mui/system";
+import { Link } from 'react-router-dom'
+import { useState } from "react";
+import List from '@mui/material/List';
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 
+const Navbar = () => {
+   const [drawer, setDrawer] = useState(false);
+   const theme = useTheme();
+   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+   const toggleDrawer = (open) => {
+      setDrawer(open);
+   };
+   const drawerLinks = [
+    {
+      text: 'Home',
+      to: '/',
+    },
+    {
+      text: 'Login',
+      to: '/login',
+    },
+    {
+      text: 'About',
+      to: '#about',
+    },
+   ]
 
-const pages = ['Sign In', 'About Us', 'Contact Us'];
-
-
-function NavigationBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
- 
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  
-  
-return (
-<AppBar position="static">
-  <Container maxWidth="xl">
-    <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-      {/* Center - Logo */}
-      <Box
-        component="img"
-        src={Logo}
-        alt="Spin Republic Logo"
-        sx={{
-          height: 40,
-          mx: "auto",
-          display: { xs: "flex", md: "none" }, // show only on mobile
-        }}
-      />
-
-      <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
-        <IconButton
-          size="large"
-          aria-label="menu"
-          onClick={handleOpenNavMenu}
-          color="inherit"
-        >
-          <MenuIcon />
-        </IconButton>
+  return (
+    <>
+    <AppBar position='static' >
+      <Toolbar>
+        <Box flexGrow={1}>
+        <Box component={Link} to='/'>
+        <Box component='img' src={logo} sx={{height:40, mr: 2}}/>
+        </Box>
+        </Box>
+        {isMobile && (
+          <IconButton sx={{mr:2}} color="inherit" onClick={() => toggleDrawer(true)}>
+            <MenuIcon/>
+          </IconButton>
+        )}
+        {!isMobile && (
+          <>
+          <Button component={Link} color="inherit" to='/'>Home</Button>
+        <Button component={Link} color="inherit" to='/login'>Login</Button>
+        <Button component={Link} color="inherit" href="#about">About</Button>
+        </>
+        )}
+        
+      </Toolbar>
+    </AppBar>
+    <Drawer anchor="right" open={drawer} onClose={() => toggleDrawer(false)}>
+      <Box sx={{width:200}} role='presentation' onClick={() => toggleDrawer(false)}>
+        <List>
+          {drawerLinks.map((linkItem, index) => {
+            return (
+            <ListItem key={index} disablePadding>
+              <ListItemButton component='a' to={linkItem.to} onClick={() => toggleDrawer(false)} aria-label={`Navigate to ${linkItem.text}`}>
+                <ListItemText primary={linkItem.text}/>
+              </ListItemButton>
+            </ListItem>
+            )
+          })}
+        </List>
       </Box>
-
-      {/* Desktop Logo */}
-      <Box
-        component="img"
-        src={Logo}
-        alt="Spin Republic Logo"
-        sx={{
-          height: 40,
-          mr: 4,
-          display: { xs: "none", md: "flex" }, // show only on desktop
-        }}
-      />
-
-      {/* Desktop Menu */}
-      <Box sx={{ ml: "auto", display: { xs: "none", md: "flex" } }}>
-        {pages.map((page) => (
-          <Button
-            key={page}
-            onClick={handleCloseNavMenu}
-            sx={{ my: 2, color: "white", display: "block" }}
-          >
-            {page}
-          </Button>
-        ))}
-      </Box>
-
-      {/* Mobile Dropdown Menu */}
-      <Menu
-        id="menu-appbar"
-        anchorEl={anchorElNav}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-        open={Boolean(anchorElNav)}
-        onClose={handleCloseNavMenu}
-        sx={{ display: { xs: "block", md: "none" } }}
-      >
-        {pages.map((page) => (
-          <MenuItem key={page} onClick={handleCloseNavMenu}>
-            <Typography sx={{ textAlign: "center" }}>{page}</Typography>
-          </MenuItem>
-        ))}
-      </Menu>
-    </Toolbar>
-  </Container>
-</AppBar>
-
-  );
+    </Drawer>
+    </>
+  )
 }
-export default NavigationBar;
+
+export default Navbar;

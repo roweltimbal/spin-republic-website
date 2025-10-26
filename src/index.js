@@ -9,6 +9,9 @@ const theme = createTheme({
     primary: { main: "#CE0D0D" },
     secondary: { main: "#A50A0A" },
   },
+  typography: {
+    fontFamily: '"Roboto", sans-serif',
+  },
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
