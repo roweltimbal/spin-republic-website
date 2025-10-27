@@ -1,10 +1,26 @@
 import { Container, Paper, Link, Avatar, Typography, Box, TextField, FormControlLabel, Checkbox, Button, Grid } from "@mui/material";
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import {Link as ReactRouter} from 'react-router-dom'
+import { signInWithGooglePopup, createUserDocumentFromAuth } from "../utils/firebase/firebase.utils";
 
-const Login = () => {   
+
+
+
+const Login = () => {
+   
+  //googleAuth Handler, its async because you are calling to a db 
+  const logGoogleUser = async () => {
+    const {user} = await signInWithGooglePopup();
+    const userDocRef = await createUserDocumentFromAuth(user);
+
+  }
+
   const handleSubmit = () => {
     console.log('Sign in submit')
+  }
+
+  const handleGoogleSignin = () => {
+    alert("Google sign in")
   }
   return (
   <>
@@ -31,6 +47,7 @@ const Login = () => {
           <Link component={ReactRouter} to='/register'>Create account</Link>
          </Grid>
       </Box>
+      <Button onClick={logGoogleUser} variant="outlined" fullWidth color="success" sx={{mt:1}}>SIGN IN WITH GOOGLE</Button>
     </Paper>
   </Container>
   </>  
