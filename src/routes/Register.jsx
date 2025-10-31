@@ -1,9 +1,60 @@
 import { Avatar, Container, Paper, Typography, Box, TextField, Button } from "@mui/material";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { useState } from "react";
+import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../utils/firebase/firebase.utils";
+
+const defaultFormFields = {
+    displayName: '',
+    email: '',
+    password: '',
+    confirmPassword:''
+}
 
 const Register = () => {       
-    const handleCreateAccountSubmit = () => {
-        alert('Create account submit')
+    const [error, setError] = useState('');
+    const [formFields, setFormFields] = useState(defaultFormFields);
+    const {displayName, email, password, confirmPassword} = formFields;
+
+    
+    const handleChange = (event) => {
+        const {name, value} = event.target;
+        setFormFields({...formFields, [name]: value})
+    }
+    
+    
+    const resetFormFields = () => {
+        setFormFields(defaultFormFields);
+    }
+
+    const handleCreateAccountSubmit = async (event) => {
+        event.preventDefault();
+        setError('');
+         if(password !== confirmPassword) {
+            setError('password does not match');
+            return;
+        }
+        try {
+            const {user} = await createAuthUserWithEmailAndPassword(email,password);
+            // added display name in an object because it's null by default
+            await createUserDocumentFromAuth(user, {displayName});
+            resetFormFields();
+        } catch (error) {
+        switch (error.code) {
+            case 'auth/weak-password':
+                setError('Password must be at least 6 characters');
+                break;
+            case 'auth/email-already-in-use':
+                setError('Email already in use');
+                break;
+            case 'auth/invalid-email':
+                setError('Invalid email address');
+                break;
+            default:
+                setError('An unexpected error occurred. Please try again.');
+                break;
+        }
+            
+        }
     }     
     return (
         <>
@@ -19,8 +70,13 @@ const Register = () => {
                     </Avatar>
                     <Typography component='h1' variant="h5" textAlign='center' >Create Account</Typography>
                     <Box component='form' onSubmit={handleCreateAccountSubmit} sx={{mt:1}}>
-                        <TextField placeholder="Enter username" fullWidth required autoFocus sx={{mb:2}}></TextField>
-                        <TextField placeholder="Enter password" type="password" fullWidth sx={{mb:2}}></TextField>
+                        <TextField placeholder="Enter display name" fullWidth required autoFocus sx={{mb:2}} onChange={handleChange} name="displayName" value={displayName} ></TextField>
+                        <TextField placeholder="Enter email" fullWidth required autoFocus sx={{mb:2}} onChange={handleChange} name="email" value={email} ></TextField>
+                        <TextField placeholder="Enter password" type="password" fullWidth sx={{mb:2}} onChange={handleChange} name="password" value={password}></TextField>
+                        <TextField placeholder="Confirm password" type="password" fullWidth sx={{mb:2}} onChange={handleChange} name="confirmPassword" value={confirmPassword}></TextField>
+                        {error && (
+                            <Typography component='p' color="error" sx={{mb:1, textAlign: 'center'}}>{error}</Typography>
+                        )}
                          <Button type="submit" variant="contained" fullWidth>Submit</Button>
                     </Box>
                    

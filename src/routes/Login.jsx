@@ -11,7 +11,7 @@ const Login = () => {
   //googleAuth Handler, its async because you are calling to a db 
   const logGoogleUser = async () => {
     const {user} = await signInWithGooglePopup();
-    const userDocRef = await createUserDocumentFromAuth(user);
+    await createUserDocumentFromAuth(user);
 
   }
 
@@ -38,7 +38,7 @@ const Login = () => {
         Sign in
       </Typography>
       <Box component='form' onSubmit={handleSubmit} noValidate sx={{mt:1}}>
-        <TextField placeholder="Enter username" fullWidth required autoFocus sx={{mb:2}}></TextField>
+        <TextField placeholder="Enter email" fullWidth required autoFocus sx={{mb:2}}></TextField>
          <TextField placeholder="Enter password" fullWidth required type="password"  sx={{mb:2}}></TextField>
          <FormControlLabel control={<Checkbox value='remember' color="primary"/>} label='Remember me'/>
          <Button type="submit" variant="contained" fullWidth sx={{mt:1}}>SIGN IN</Button>

@@ -1,9 +1,9 @@
 import { initializeApp } from 'firebase/app';
 import { 
     getAuth, 
-    signInWithRedirect,
     signInWithPopup,
-    GoogleAuthProvider
+    GoogleAuthProvider,
+    createUserWithEmailAndPassword
 } from 'firebase/auth';
 import {
     getFirestore,
@@ -14,12 +14,12 @@ import {
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyC--ydyvTY0AGQqpzGm6kGXzyPbwg4Jg38",
-  authDomain: "spin-republic-db.firebaseapp.com",
-  projectId: "spin-republic-db",
-  storageBucket: "spin-republic-db.firebasestorage.app",
-  messagingSenderId: "394229501841",
-  appId: "1:394229501841:web:fa622b8210e5d54a34d430"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 // Initialize Firebase
@@ -42,7 +42,8 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
 // this is our db
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async(userAuth) => {
+export const createUserDocumentFromAuth = async(userAuth, additionalInformation = {}) => {
+    if(!userAuth) return;
     const userDocRef = doc(db, 'users', userAuth.uid )
     
     const userSnapshot = await getDoc(userDocRef);
@@ -56,7 +57,8 @@ export const createUserDocumentFromAuth = async(userAuth) => {
             await setDoc(userDocRef, {
                 displayName,
                 email,
-                createdAt
+                createdAt,
+                ...additionalInformation
             })
         } catch (error) {
             console.log('error', error.message)
@@ -70,3 +72,7 @@ export const createUserDocumentFromAuth = async(userAuth) => {
 
 }
 
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if(!email || !password) return;
+    return await createUserWithEmailAndPassword(auth,email,password)
+}
