@@ -1,27 +1,60 @@
 import { Container, Paper, Link, Avatar, Typography, Box, TextField, FormControlLabel, Checkbox, Button, Grid } from "@mui/material";
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
-import {Link as ReactRouter} from 'react-router-dom'
-import { signInWithGooglePopup, createUserDocumentFromAuth } from "../utils/firebase/firebase.utils";
+import {Link as ReactRouter, useNavigate} from 'react-router-dom'
+import { signInWithGooglePopup, createUserDocumentFromAuth, signInAuthWithEmailAndPassword } from "../utils/firebase/firebase.utils";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/User.context";
 
-
+const defaultFormFields = {
+  email: '',
+  password: '',
+}
 
 
 const Login = () => {
+   const navigate = useNavigate();
+   const [errorMessage, setErrorMessage] = useState(null);
+   const [formFields, setFormFields] = useState(defaultFormFields);
+   const {email, password} = formFields;
    
+   // using UserContext
+   const {currentUser, setCurrentUser} = useContext(UserContext);
+  
+   // change handler for the inputs
+  const handleChange = (event) => {
+    const {name, value} = event.target;
+    setFormFields({...formFields, [name]: value})
+  }
+  
+  // reset formfields
+  const resetFormFields = () => setFormFields(defaultFormFields);
+  
   //googleAuth Handler, its async because you are calling to a db 
   const logGoogleUser = async () => {
     const {user} = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
-
+    const currentUser = await createUserDocumentFromAuth(user);
+    console.log(currentUser)
+  }
+  
+  // seeting user using email and password
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const {user}= await signInAuthWithEmailAndPassword(email, password);
+      if(user) {
+        const currentUserFromSignInWithEmailAndPassword = await createUserDocumentFromAuth(user);
+        setCurrentUser(currentUserFromSignInWithEmailAndPassword);
+      }
+      resetFormFields();
+      navigate('/dashboard');
+    } catch (error) {
+      if(error.code === 'auth/invalid-credential') {
+        setErrorMessage('Wrong Email or Password')
+      }
+    }
   }
 
-  const handleSubmit = () => {
-    console.log('Sign in submit')
-  }
-
-  const handleGoogleSignin = () => {
-    alert("Google sign in")
-  }
+ 
   return (
   <>
   <Container maxWidth='xs'>
@@ -38,8 +71,9 @@ const Login = () => {
         Sign in
       </Typography>
       <Box component='form' onSubmit={handleSubmit} noValidate sx={{mt:1}}>
-        <TextField placeholder="Enter email" fullWidth required autoFocus sx={{mb:2}}></TextField>
-         <TextField placeholder="Enter password" fullWidth required type="password"  sx={{mb:2}}></TextField>
+        <TextField placeholder="Enter email" fullWidth required autoFocus sx={{mb:2}} name="email" value={email} onChange={handleChange}></TextField>
+         <TextField placeholder="Enter password" fullWidth required type="password"  sx={{mb:2}} name="password" value={password} onChange={handleChange}></TextField>
+         {errorMessage && (<Typography component='p' color="error" textAlign='center'>{errorMessage}</Typography>)}
          <FormControlLabel control={<Checkbox value='remember' color="primary"/>} label='Remember me'/>
          <Button type="submit" variant="contained" fullWidth sx={{mt:1}}>SIGN IN</Button>
          <Grid container justifyContent='space-between' sx={{mt:1}}>

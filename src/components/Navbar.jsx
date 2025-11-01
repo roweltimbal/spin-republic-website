@@ -10,13 +10,17 @@ import Drawer from '@mui/material/Drawer';
 import logo from '../assets/srlogowhite.png'
 import { height, useMediaQuery, useTheme } from "@mui/system";
 import { Link } from 'react-router-dom'
-import { useState } from "react";
+import { useState, useContext } from "react";
 import List from '@mui/material/List';
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { UserContext } from "../context/User.context";
 
 const Navbar = () => {
+   //using context to check if current user is signed in
+   const {currentUser} = useContext(UserContext);
+
    const [drawer, setDrawer] = useState(false);
    const theme = useTheme();
    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -38,6 +42,23 @@ const Navbar = () => {
     },
    ]
 
+   const drawerLinksLogout = [
+    {
+      text: 'Home',
+      to: '/',
+    },
+    {
+      text: 'Log out',
+      to: '/login',
+    },
+    {
+      text: 'About',
+      to: '#about',
+    },
+   ]
+
+   const linksTorender = currentUser ? drawerLinksLogout : drawerLinks;
+
   return (
     <>
     <AppBar position='static' >
@@ -55,7 +76,7 @@ const Navbar = () => {
         {!isMobile && (
           <>
           <Button component={Link} color="inherit" to='/'>Home</Button>
-        <Button component={Link} color="inherit" to='/login'>Login</Button>
+        <Button component={Link} color="inherit" to='/login'>{currentUser ? 'log out' : 'login'}</Button>
         <Button component={Link} color="inherit" href="#about">About</Button>
         </>
         )}
@@ -65,7 +86,7 @@ const Navbar = () => {
     <Drawer anchor="right" open={drawer} onClose={() => toggleDrawer(false)}>
       <Box sx={{width:200}} role='presentation' onClick={() => toggleDrawer(false)}>
         <List>
-          {drawerLinks.map((linkItem, index) => {
+          {linksTorender.map((linkItem, index) => {
             return (
             <ListItem key={index} disablePadding>
               <ListItemButton component='a' to={linkItem.to} onClick={() => toggleDrawer(false)} aria-label={`Navigate to ${linkItem.text}`}>

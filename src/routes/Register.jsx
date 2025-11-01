@@ -1,6 +1,7 @@
 import { Avatar, Container, Paper, Typography, Box, TextField, Button } from "@mui/material";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../utils/firebase/firebase.utils";
 
 const defaultFormFields = {
@@ -14,7 +15,8 @@ const Register = () => {
     const [error, setError] = useState('');
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {displayName, email, password, confirmPassword} = formFields;
-
+    // using navigate
+    const navigate = useNavigate();
     
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -38,6 +40,7 @@ const Register = () => {
             // added display name in an object because it's null by default
             await createUserDocumentFromAuth(user, {displayName});
             resetFormFields();
+            navigate('/login')
         } catch (error) {
         switch (error.code) {
             case 'auth/weak-password':
