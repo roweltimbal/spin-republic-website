@@ -16,17 +16,26 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { UserContext } from "../context/User.context";
+import { useNavigate } from 'react-router-dom';
+import { signOutUser } from "../utils/firebase/firebase.utils";
 
 const Navbar = () => {
    //using context to check if current user is signed in
    const {currentUser} = useContext(UserContext);
-
+   const navigate = useNavigate();
    const [drawer, setDrawer] = useState(false);
    const theme = useTheme();
    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
    const toggleDrawer = (open) => {
       setDrawer(open);
    };
+   
+   const handleLogout = () => {
+  signOutUser(); 
+  toggleDrawer(false);
+  navigate('/login');
+  };
+
    const drawerLinks = [
     {
       text: 'Home',
@@ -76,7 +85,8 @@ const Navbar = () => {
         {!isMobile && (
           <>
           <Button component={Link} color="inherit" to='/'>Home</Button>
-        <Button component={Link} color="inherit" to='/login'>{currentUser ? 'log out' : 'login'}</Button>
+          {currentUser ? <Button component={Link} color="inherit" to='/login' onClick={signOutUser}>Log out</Button> : <Button component={Link} color="inherit" to='/login'>Login</Button>}
+        
         <Button component={Link} color="inherit" href="#about">About</Button>
         </>
         )}
@@ -87,9 +97,18 @@ const Navbar = () => {
       <Box sx={{width:200}} role='presentation' onClick={() => toggleDrawer(false)}>
         <List>
           {linksTorender.map((linkItem, index) => {
+            if (linkItem.text === 'Log out') {
+            return (
+                    <ListItem key={index} disablePadding>
+                      <ListItemButton onClick={handleLogout} aria-label="Log out">
+                        <ListItemText primary={linkItem.text} />
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                }
             return (
             <ListItem key={index} disablePadding>
-              <ListItemButton component='a' to={linkItem.to} onClick={() => toggleDrawer(false)} aria-label={`Navigate to ${linkItem.text}`}>
+              <ListItemButton component={Link} to={linkItem.to} onClick={() => toggleDrawer(false)} aria-label={`Navigate to ${linkItem.text}`}>
                 <ListItemText primary={linkItem.text}/>
               </ListItemButton>
             </ListItem>

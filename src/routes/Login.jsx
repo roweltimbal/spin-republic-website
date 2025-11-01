@@ -2,8 +2,8 @@ import { Container, Paper, Link, Avatar, Typography, Box, TextField, FormControl
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import {Link as ReactRouter, useNavigate} from 'react-router-dom'
 import { signInWithGooglePopup, createUserDocumentFromAuth, signInAuthWithEmailAndPassword } from "../utils/firebase/firebase.utils";
-import { useState, useContext } from "react";
-import { UserContext } from "../context/User.context";
+import { useState } from "react";
+
 
 const defaultFormFields = {
   email: '',
@@ -17,8 +17,6 @@ const Login = () => {
    const [formFields, setFormFields] = useState(defaultFormFields);
    const {email, password} = formFields;
    
-   // using UserContext
-   const {currentUser, setCurrentUser} = useContext(UserContext);
   
    // change handler for the inputs
   const handleChange = (event) => {
@@ -36,15 +34,12 @@ const Login = () => {
     console.log(currentUser)
   }
   
-  // seeting user using email and password
+  // setting user using email and password
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const {user}= await signInAuthWithEmailAndPassword(email, password);
-      if(user) {
-        const currentUserFromSignInWithEmailAndPassword = await createUserDocumentFromAuth(user);
-        setCurrentUser(currentUserFromSignInWithEmailAndPassword);
-      }
+      await createUserDocumentFromAuth(user);
       resetFormFields();
       navigate('/dashboard');
     } catch (error) {
