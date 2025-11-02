@@ -12,7 +12,12 @@ import {
     getFirestore,
     doc,
     getDoc,
-    setDoc
+    setDoc,
+    collection,
+    writeBatch,
+    updateDoc,
+    arrayUnion,
+    onSnapshot
 } from 'firebase/firestore'
 
 // Your web app's Firebase configuration
@@ -55,12 +60,14 @@ export const createUserDocumentFromAuth = async(userAuth, additionalInformation 
     if(!userSnapshot.exists()) {
         const {displayName, email} = userAuth;
         const createdAt = new Date();
+        const mySchedules = [];
 
         try {
             await setDoc(userDocRef, {
                 displayName,
                 email,
                 createdAt,
+                mySchedules,
                 ...additionalInformation
             })
         } catch (error) {
@@ -90,3 +97,33 @@ export const signOutUser = async () => await signOut(auth);
 
 // authStateChange Listener
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+
+// adding data to our db
+export const addScheduleToDashboard = async (scheduleToAdd) => {
+    try {
+        const docRef = doc(db, 'OpenPlayData', 'OpenPlayDashboard');
+        await updateDoc(docRef, {
+            schedules: arrayUnion(scheduleToAdd)
+        });
+        console.log('Schedule added succesfully!')
+    } catch (error) {
+        console.error('Error adding schedule: ', error)
+    }
+}
+
+// fetching data from firebase
+// export const getOpenPlaySchedules = async () => {
+//     const docRef =  doc(db, 'OpenPlayData', 'OpenPlayDashboard');
+//     const unsubscribe =  onSnapshot(docRef, (snapshot) => {
+//         if(snapshot.exists()) {
+//             const data = snapshot.data().schedules || [];
+//             setSchedule(data);
+//         }
+//     })
+//     return unsubscribe
+// }
+
+// Created collection firestore db
+// export const loadDb = async () => await setDoc(doc(db, 'OpenPlayData', 'OpenPlayDashboard'), {
+//     schedules: []
+// });

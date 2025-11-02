@@ -14,6 +14,7 @@ export const UserProvider = ({children}) => {
         console.log(user)
         setCurrentUser(user)
     })
+   
     return unsubscribe
 }, [])
     const [currentUser, setCurrentUser] = useState(null);
