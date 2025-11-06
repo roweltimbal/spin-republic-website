@@ -30,8 +30,8 @@ const Login = () => {
   //googleAuth Handler, its async because you are calling to a db 
   const logGoogleUser = async () => {
     const {user} = await signInWithGooglePopup();
-    const currentUser = await createUserDocumentFromAuth(user);
-    console.log(currentUser)
+    await createUserDocumentFromAuth(user);
+    navigate('/dashboard')
   }
   
   // setting user using email and password

@@ -48,6 +48,10 @@ const Navbar = () => {
       text: 'About',
       to: '#about',
     },
+    {
+      text: 'Dashboard',
+      to: '/dashboard',
+    },
    ]
 
    const drawerLinksLogout = [
@@ -62,6 +66,10 @@ const Navbar = () => {
     {
       text: 'About',
       to: '#about',
+    },
+    {
+      text: 'Dashboard',
+      to: '/dashboard',
     },
    ]
 
