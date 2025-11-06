@@ -105,7 +105,6 @@ export const addScheduleToDashboard = async (scheduleToAdd) => {
         await updateDoc(docRef, {
             schedules: arrayUnion(scheduleToAdd)
         });
-        console.log('Schedule added succesfully!')
     } catch (error) {
         console.error('Error adding schedule: ', error)
     }

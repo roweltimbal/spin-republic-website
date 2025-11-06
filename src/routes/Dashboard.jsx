@@ -19,6 +19,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { UserContext } from "../context/User.context";
+import MyScheduleDashboard  from '../components/MyScheduleDashboard';
 
 const scheduleToAdd = {
    displayName: '',
@@ -77,7 +78,7 @@ const Dashboard = () => {
             />
          </LocalizationProvider>
          <DialogContentText color="black">Time</DialogContentText>
-         <DialogContentText> 
+         <DialogContentText > 
          <TextareaAutosize
             aria-label="time of arrival"
             placeholder="e.g. 6:00 pm"
@@ -89,7 +90,7 @@ const Dashboard = () => {
          />
          </DialogContentText>
          <DialogContentText color="black">Notes</DialogContentText>
-         <DialogContentText>
+         <DialogContentText >
          <TextareaAutosize
             aria-label="time of arrival"
             minRows={2}
@@ -98,19 +99,23 @@ const Dashboard = () => {
             onChange={(event) => {
                const notesAdded = event.target.value;
                scheduleToAdd.notes = notesAdded;
-               console.log(scheduleToAdd)
             }}
          />
          </DialogContentText>
       </DialogContent>
       <DialogActions>
          <Button variant="contained" autoFocus onClick={() => {
+            document.activeElement.blur();
             setOpen(false);
             handleSubmit();
          }}>Submit</Button>
-         <Button variant="contained" onClick={() => setOpen(false)}>Cancel</Button>
+         <Button variant="contained" onClick={() => {
+            document.activeElement.blur();
+            setOpen(false)
+         } }>Cancel</Button>
       </DialogActions>
    </Dialog>
+   <MyScheduleDashboard/>
    </Container>
    </>
 }

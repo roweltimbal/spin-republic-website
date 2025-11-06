@@ -31,7 +31,6 @@ export const OpenPlayScheduleProvider = ({children}) => {
                 date: dayjs(item.date.toDate()).format("MM-DD-YYYY")
                 }));
                 setOpenPlaySchedule(formatted);
-                console.log('Fetched schedules:', data)
             } else {
                 setOpenPlaySchedule([]);
             }
