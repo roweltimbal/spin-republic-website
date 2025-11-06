@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
-import { onAuthStateChangedListener } from "../utils/firebase/firebase.utils";
+import { onAuthStateChangedListener, db } from "../utils/firebase/firebase.utils";
+import { doc, onSnapshot } from "firebase/firestore";
 
 export const UserContext = createContext({
     currentUser: null,
@@ -11,8 +12,19 @@ export const UserContext = createContext({
 export const UserProvider = ({children}) => {
     useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
-        console.log(user)
-        setCurrentUser(user)
+        if(user) {
+            const userDocRef = doc(db, 'users', user.uid);
+            const unsubscribeUser = onSnapshot(userDocRef, (snapshot) => {
+                if(snapshot.exists()) {
+                    setCurrentUser(snapshot.data())
+                } else {
+                    return
+                }
+            })
+            return () => unsubscribeUser();
+        } else {
+            setCurrentUser(null);
+        }
     })
    
     return unsubscribe
