@@ -4,6 +4,7 @@ import logo from "../assets/srlogowhite.png"
 import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { UserContext } from '../context/User.context'
+import AboutUsSection from '../components/About'
 
 const Hero = () => {
   const {currentUser} = useContext(UserContext);
@@ -11,7 +12,7 @@ const Hero = () => {
     <>
     <Box
         sx={{
-          height: "70vh",
+          height: "100vh",
           width: "100%",
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImage})`,
           backgroundSize: "cover",
@@ -42,8 +43,8 @@ const Hero = () => {
         )}
       </Box>
       </Box>
-      
-    </>
+      <AboutUsSection/>
+     </>
   )
 }
 

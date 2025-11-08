@@ -1,8 +1,8 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import reportWebVitals from './reportWebVitals';
+import './index.css';
 
 const theme = createTheme({
   palette: {
@@ -10,7 +10,7 @@ const theme = createTheme({
     secondary: { main: "#A50A0A" },
   },
   typography: {
-    fontFamily: '"Roboto", sans-serif',
+    fontFamily: '"Roboto", "Barlow Condensed", sans-serif',
   },
 });
 

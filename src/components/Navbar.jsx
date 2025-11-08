@@ -93,8 +93,8 @@ const Navbar = () => {
           <>
           <Button component={Link} color="inherit" to='/'>Home</Button>
           {currentUser ? <Button component={Link} color="inherit" to='/login' onClick={signOutUser}>Log out</Button> : <Button component={Link} color="inherit" to='/login'>Login</Button>}
-        
-        <Button component={Link} color="inherit" href="#about">About</Button>
+          <Button component={Link} color="inherit" to="/dashboard">Dashboard</Button>
+          <Button color="inherit" href="#about">About</Button>
         </>
         )}
         
@@ -113,6 +113,15 @@ const Navbar = () => {
                     </ListItem>
                   );
                 }
+            if (linkItem.text === 'About') {
+              return (
+                    <ListItem key={index} disablePadding>
+                      <ListItemButton href="#about" onClick={() => toggleDrawer(false)} aria-label="Navigate to About section">
+                        <ListItemText primary={linkItem.text} />
+                      </ListItemButton>
+                    </ListItem>
+                  );
+            }   
             return (
             <ListItem key={index} disablePadding>
               <ListItemButton component={Link} to={linkItem.to} onClick={() => toggleDrawer(false)} aria-label={`Navigate to ${linkItem.text}`}>
