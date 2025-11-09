@@ -7,6 +7,7 @@ import { UserContext } from '../context/User.context'
 import AboutUsSection from '../components/About'
 import Gallery from '../components/Gallery'
 import Testimonials from '../components/Testimonials'
+import Footer from '../components/Footer'
 
 const Hero = () => {
   const {currentUser} = useContext(UserContext);
@@ -58,6 +59,10 @@ const Hero = () => {
           <Typography variant='h2' textAlign='center' color='white' fontFamily="Barlow Condensed" fontWeight='500' mb={4}>WHAT OUR PLAYERS SAY</Typography>
           <Testimonials />
         </Container>
+      </Box>
+      {/* Footer Section */}
+      <Box width={'100%'} margin={0} bgcolor='#000'>
+      <Footer />
       </Box>
      </>
   )

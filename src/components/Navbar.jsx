@@ -52,6 +52,10 @@ const Navbar = () => {
       text: 'Dashboard',
       to: '/dashboard',
     },
+    {
+      text: 'Videos',
+      to: '/videos',
+    },
    ]
 
    const drawerLinksLogout = [
@@ -68,8 +72,8 @@ const Navbar = () => {
       to: '#about',
     },
     {
-      text: 'Dashboard',
-      to: '/dashboard',
+      text: 'Videos',
+      to: '/videos',
     },
    ]
 
@@ -94,6 +98,7 @@ const Navbar = () => {
           <Button component={Link} color="inherit" to='/'>Home</Button>
           {currentUser ? <Button component={Link} color="inherit" to='/login' onClick={signOutUser}>Log out</Button> : <Button component={Link} color="inherit" to='/login'>Login</Button>}
           <Button component={Link} color="inherit" to="/dashboard">Dashboard</Button>
+          <Button component={Link} color="inherit" to="/videos">Videos</Button>
           <Button color="inherit" href="#about">About</Button>
         </>
         )}
