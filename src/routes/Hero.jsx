@@ -1,10 +1,12 @@
 import backgroundImage from '../assets/spinRepublicTeamsTwo.jpg'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Container, Typography } from '@mui/material'
 import logo from "../assets/srlogowhite.png"
 import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { UserContext } from '../context/User.context'
 import AboutUsSection from '../components/About'
+import Gallery from '../components/Gallery'
+import Testimonials from '../components/Testimonials'
 
 const Hero = () => {
   const {currentUser} = useContext(UserContext);
@@ -44,6 +46,19 @@ const Hero = () => {
       </Box>
       </Box>
       <AboutUsSection/>
+      {/* Gallery Section */}
+      <Box width={'100%'} paddingBottom={6} paddingTop={4} bgcolor='#000'>
+        <Container>
+          <Gallery />
+        </Container>
+      </Box>
+      {/* Testimonials Section */}
+      <Box width={'100%'} paddingBottom={6} paddingTop={4} bgcolor='primary.main'>
+        <Container>
+          <Typography variant='h2' textAlign='center' color='white' fontFamily="Barlow Condensed" fontWeight='500' mb={4}>WHAT OUR PLAYERS SAY</Typography>
+          <Testimonials />
+        </Container>
+      </Box>
      </>
   )
 }

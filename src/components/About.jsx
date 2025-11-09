@@ -95,7 +95,7 @@ const AboutUsSection = () => {
             </motion.div>
           </Stack>
         </Box>
-        <Box>
+        <Box py={4}>
           <Stack direction={{md:'row', xs:'column'}} spacing={3} justifyContent='center' alignItems='flex-start' sx={{width: '100%'}}>
             <Box sx={{ width: { xs: '100%', md: '50%' }, py: 2 }}>
               <motion.div
