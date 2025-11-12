@@ -43,8 +43,8 @@ const Register = () => {
             // added display name in an object because it's null by default
             await createUserDocumentFromAuth(user, {displayName});
             resetFormFields();
-            alert('Thank you for signing up! Please log in.')
-            navigate('/login')
+            alert('Thank you for signing up! See you at the tables!')
+            navigate('/dashboard')
         } catch (error) {
         switch (error.code) {
             case 'auth/weak-password':

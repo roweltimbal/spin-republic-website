@@ -50,6 +50,7 @@ const Login = () => {
       resetFormFields();
       navigate('/dashboard');
     } catch (error) {
+      setSpinner(false);
       if(error.code === 'auth/invalid-credential') {
         setErrorMessage('Wrong Email or Password')
       }
