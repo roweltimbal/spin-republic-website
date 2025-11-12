@@ -1,8 +1,9 @@
-import { Avatar, Container, Paper, Typography, Box, TextField, Button } from "@mui/material";
+import { Avatar, Container, Paper, Typography, Box, TextField, Button, Modal } from "@mui/material";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../utils/firebase/firebase.utils";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const defaultFormFields = {
     displayName: '',
@@ -13,6 +14,7 @@ const defaultFormFields = {
 
 const Register = () => {       
     const [error, setError] = useState('');
+    const [spinner, setSpinner] = useState(false)
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {displayName, email, password, confirmPassword} = formFields;
     // using navigate
@@ -36,10 +38,12 @@ const Register = () => {
             return;
         }
         try {
+            setSpinner(true);
             const {user} = await createAuthUserWithEmailAndPassword(email,password);
             // added display name in an object because it's null by default
             await createUserDocumentFromAuth(user, {displayName});
             resetFormFields();
+            alert('Thank you for signing up! Please log in.')
             navigate('/login')
         } catch (error) {
         switch (error.code) {
@@ -82,8 +86,16 @@ const Register = () => {
                         )}
                          <Button type="submit" variant="contained" fullWidth>Submit</Button>
                     </Box>
-                   
                 </Paper>
+                <Modal
+                      open={spinner}
+                      aria-labelledby="loading spinner"
+                      aria-describedby="waiting for user to load"
+                    >
+                      <Box position='absolute' top='50%' left='50%'>
+                      <CircularProgress/>
+                      </Box>
+                    </Modal>
             </Container>
         </>
     )

@@ -1,8 +1,10 @@
-import { Container, Paper, Link, Avatar, Typography, Box, TextField, FormControlLabel, Checkbox, Button, Grid } from "@mui/material";
+import { Container, Paper, Link, Avatar, Typography, Box, TextField, FormControlLabel, Checkbox, Button, Grid, Modal } from "@mui/material";
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import {Link as ReactRouter, useNavigate} from 'react-router-dom'
 import { signInWithGooglePopup, createUserDocumentFromAuth, signInAuthWithEmailAndPassword } from "../utils/firebase/firebase.utils";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import CircularProgress from '@mui/material/CircularProgress';
+import { UserContext } from "../context/User.context";
 
 
 const defaultFormFields = {
@@ -12,9 +14,11 @@ const defaultFormFields = {
 
 
 const Login = () => {
+   const {currentUser} = useContext(UserContext)
    const navigate = useNavigate();
    const [errorMessage, setErrorMessage] = useState(null);
    const [formFields, setFormFields] = useState(defaultFormFields);
+   const [spinner, setSpinner] = useState(false);
    const {email, password} = formFields;
    
   
@@ -38,6 +42,9 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      if(!currentUser) {
+        setSpinner(true);
+      }
       const {user}= await signInAuthWithEmailAndPassword(email, password);
       await createUserDocumentFromAuth(user);
       resetFormFields();
@@ -69,15 +76,24 @@ const Login = () => {
         <TextField placeholder="Enter email" fullWidth required autoFocus sx={{mb:2}} name="email" value={email} onChange={handleChange}></TextField>
          <TextField placeholder="Enter password" fullWidth required type="password"  sx={{mb:2}} name="password" value={password} onChange={handleChange}></TextField>
          {errorMessage && (<Typography component='p' color="error" textAlign='center'>{errorMessage}</Typography>)}
-         <FormControlLabel control={<Checkbox value='remember' color="primary"/>} label='Remember me'/>
+         {/* <FormControlLabel control={<Checkbox value='remember' color="primary"/>} label='Remember me'/> */}
          <Button type="submit" variant="contained" fullWidth sx={{mt:1}}>SIGN IN</Button>
          <Grid container justifyContent='space-between' sx={{mt:1}}>
-          <Link component={ReactRouter} to='/forgot'>Forgot password</Link>
+          <Button component='button' disabled>Forgot password</Button>
           <Link component={ReactRouter} to='/register'>Create account</Link>
          </Grid>
       </Box>
       <Button onClick={logGoogleUser} variant="outlined" fullWidth color="success" sx={{mt:1}}>SIGN IN WITH GOOGLE</Button>
     </Paper>
+    <Modal
+      open={spinner}
+      aria-labelledby="loading spinner"
+      aria-describedby="waiting for user to load"
+    >
+      <Box position='absolute' top='50%' left='50%'>
+      <CircularProgress/>
+      </Box>
+    </Modal>
   </Container>
   </>  
   )
