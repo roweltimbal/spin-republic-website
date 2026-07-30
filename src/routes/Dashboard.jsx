@@ -1,15 +1,13 @@
 import { addScheduleToDashboard } from "../utils/firebase/firebase.utils";
-import { 
-   Box, 
-   Button, 
-   Typography, 
-   Container, 
-   Dialog, 
-   DialogTitle, 
+import {
+   Button,
+   Container,
+   Dialog,
+   DialogTitle,
    DialogContent,
    DialogContentText,
    DialogActions,
-   TextareaAutosize 
+   TextareaAutosize
 } from '@mui/material'
 import OpenPlayDashboard from '../components/OpenPlayDashBoard'
 import AddIcon from '@mui/icons-material/Add';
@@ -29,18 +27,6 @@ const scheduleToAdd = {
    notes: '',
    time: ''
 }
-
-const defaultFormFields = {
-   displayName: '',
-   email: '',
-   likes: 0,
-   date: '',
-   notes: '',
-   time: ''
-}
-
-
-
 
 const Dashboard = () => {
    const {currentUser} = useContext(UserContext);

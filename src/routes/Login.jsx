@@ -1,4 +1,4 @@
-import { Container, Paper, Link, Avatar, Typography, Box, TextField, FormControlLabel, Checkbox, Button, Grid, Modal } from "@mui/material";
+import { Container, Paper, Link, Avatar, Typography, Box, TextField, Button, Grid, Modal } from "@mui/material";
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import {Link as ReactRouter, useNavigate} from 'react-router-dom'
 import { signInWithGooglePopup, createUserDocumentFromAuth, signInAuthWithEmailAndPassword } from "../utils/firebase/firebase.utils";
@@ -77,7 +77,6 @@ const Login = () => {
         <TextField placeholder="Enter email" fullWidth required autoFocus sx={{mb:2}} name="email" value={email} onChange={handleChange}></TextField>
          <TextField placeholder="Enter password" fullWidth required type="password"  sx={{mb:2}} name="password" value={password} onChange={handleChange}></TextField>
          {errorMessage && (<Typography component='p' color="error" textAlign='center'>{errorMessage}</Typography>)}
-         {/* <FormControlLabel control={<Checkbox value='remember' color="primary"/>} label='Remember me'/> */}
          <Button type="submit" variant="contained" fullWidth sx={{mt:1}}>SIGN IN</Button>
          <Grid container justifyContent='space-between' sx={{mt:1}}>
           <Button component='button' disabled>Forgot password</Button>
@@ -85,6 +84,18 @@ const Login = () => {
          </Grid>
       </Box>
       <Button onClick={logGoogleUser} variant="outlined" fullWidth color="success" sx={{mt:1}}>SIGN IN WITH GOOGLE</Button>
+      <Box sx={{
+        mt: 2,
+        p: 2,
+        borderRadius: 1,
+        textAlign: 'center',
+        backgroundColor: 'rgba(46, 125, 50, 0.1)',
+        border: '1px solid rgba(46, 125, 50, 0.3)',
+      }}>
+        <Typography variant="body2" sx={{fontWeight: 600}}>Demo credentials</Typography>
+        <Typography variant="body2">Username: demo@gmail.com</Typography>
+        <Typography variant="body2">Password: Demopass</Typography>
+      </Box>
     </Paper>
     <Modal
       open={spinner}

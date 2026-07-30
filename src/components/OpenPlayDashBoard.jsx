@@ -2,14 +2,6 @@ import { Typography, TableContainer, Table, TableHead, TableBody, TableRow, Tabl
 import { useContext } from "react";
 import { OpenPlayScheduleContext } from "../context/OpenPlaySchedule.context";
 
-// const testArr = [
-//     {name: 'Jack',
-//      date: 'nov 2',
-//      time: '6 pm',
-//      notes: 'easy game'   
-//     }
-// ]
-
 const OpenPlayDashboard = () => {
     const {openPlaySchedule} = useContext(OpenPlayScheduleContext)
     
