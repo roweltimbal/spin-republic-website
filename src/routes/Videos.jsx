@@ -1,4 +1,4 @@
-import {Box, Container, Card, CardHeader, CardMedia, Typography} from '@mui/material';
+import {Box, Container, Card, Typography} from '@mui/material';
 
 const videosArray=[
     {

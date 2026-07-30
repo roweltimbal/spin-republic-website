@@ -13,11 +13,8 @@ import {
     doc,
     getDoc,
     setDoc,
-    collection,
-    writeBatch,
     updateDoc,
-    arrayUnion,
-    onSnapshot
+    arrayUnion
 } from 'firebase/firestore'
 
 // Your web app's Firebase configuration
@@ -31,7 +28,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 // Creating a GoogleAuthProvider instance
 const provider = new GoogleAuthProvider();
@@ -109,20 +106,3 @@ export const addScheduleToDashboard = async (scheduleToAdd) => {
         console.error('Error adding schedule: ', error)
     }
 }
-
-// fetching data from firebase
-// export const getOpenPlaySchedules = async () => {
-//     const docRef =  doc(db, 'OpenPlayData', 'OpenPlayDashboard');
-//     const unsubscribe =  onSnapshot(docRef, (snapshot) => {
-//         if(snapshot.exists()) {
-//             const data = snapshot.data().schedules || [];
-//             setSchedule(data);
-//         }
-//     })
-//     return unsubscribe
-// }
-
-// Created collection firestore db
-// export const loadDb = async () => await setDoc(doc(db, 'OpenPlayData', 'OpenPlayDashboard'), {
-//     schedules: []
-// });

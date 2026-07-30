@@ -1,15 +1,7 @@
 import { Typography, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from "@mui/material";
 import { useContext } from "react";
 import { OpenPlayScheduleContext } from "../context/OpenPlaySchedule.context";
-import { currentUser, UserContext } from '../context/User.context'
-
-// const testArr = [
-//     {name: 'Jack',
-//      date: 'nov 2',
-//      time: '6 pm',
-//      notes: 'easy game'   
-//     }
-// ]
+import { UserContext } from '../context/User.context'
 
 const MyScheduleDashboard = () => {
     const {openPlaySchedule} = useContext(OpenPlayScheduleContext)
