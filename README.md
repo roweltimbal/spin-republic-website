@@ -1,70 +1,112 @@
-# Getting Started with Create React App
+# 🏓 Spin Republic
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern web platform built for Spin Republic, a local table tennis club, to strengthen its community by making it easier for players to discover tournaments, learn the game and stay connected with the club.
 
-## Available Scripts
+**🌐 Live Demo:** https://spinrepublic.netlify.app/
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Spin Republic was created to provide players with a central place to learn about the club, explore upcoming tournaments, and register for events through a clean and responsive interface.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This project gave me the opportunity to apply full-stack development skills to a real business while focusing on user experience, responsive design, and practical problem solving.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
 
-### `npm run build`
+- 🏓 Modern landing page
+- 📅 Tournament and event information
+- 📱 Fully responsive design
+- ⚡ Fast loading experience
+- 🔥 Firebase integration
+- ☁️ Cloud-hosted deployment
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Tech Stack
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Frontend
 
-### `npm run eject`
+- React
+- Material UI
+- JavaScript
+- HTML5
+- CSS3
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Backend / Services
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Firebase
+- Firestore
 
 ### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Netlify
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## My Responsibilities
+
+As the co-founder and developer, I was responsible for:
+
+- UI / UX Design
+- Frontend Development
+- Firebase Integration
+- Firestore Database Design
+- Responsive Design
+- Deployment
+- Feature Planning
+
+---
+
+## What I Learned
+
+This project taught me how to build software for real users rather than simply completing coding exercises.
+
+Working directly with a business helped me understand the importance of gathering feedback, prioritizing usability, and building features that solve real problems.
+
+---
+
+## Future Improvements
+
+- Admin dashboard for tournament management
+- Online payment integration
+- Player profiles
+- Tournament history
+- Match scheduling
+- Performance analytics
+
+---
+
+## Getting Started
+
+Clone the repository
+
+```bash
+git clone https://github.com/yourusername/spin-republic.git
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run the development server
+
+```bash
+npm start
+```
+
+---
+
+## Author
+
+**Rowel Timbal**
+
+GitHub: https://github.com/roweltimbal
+
+LinkedIn: https://www.linkedin.com/in/rowel-timbal-789b03109/
+
+Portfolio: https://rowel-portfolio.vercel.app/
